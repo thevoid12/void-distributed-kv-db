@@ -1,0 +1,19 @@
+{
+  "shards": [
+    {
+      "name": "void-shard-zoneA",
+      "idx": 0,
+      "address": "localhost:8080"
+    },
+    {
+      "name": "void-shard-zoneB",
+      "idx": 1,
+      "address": "localhost:8081"
+    },
+    {
+      "name": "void-shard-zoneC",
+      "idx": 2,
+      "address": "localhost:8082"
+    }
+  ]
+}
