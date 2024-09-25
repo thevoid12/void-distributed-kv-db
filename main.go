@@ -42,30 +42,18 @@ func main() {
 		log.Fatalf("Error reading config file: %v", err)
 	}
 
-	var shardCount int
-	var shardIdx int = -1
-	var addrs = make(map[int]string)
-
-	var config []config.Shard
-	err = viper.UnmarshalKey("shards", &config)
+	var shardConfig []config.Shard
+	err = viper.UnmarshalKey("shards", &shardConfig)
 	if err != nil {
 		log.Fatalf("Error unmarshalling shard config: %v", err)
 	}
 
-	for _, s := range config {
-		log.Printf("Available shard: %s, address: %s", s.Name, s.Address)
-		addrs[s.Idx] = s.Address
-		if s.Name == *shard {
-			shardIdx = s.Idx
-		}
+	shards, err := config.ParseShards(shardConfig, *shard)
+	if err != nil {
+		log.Fatalf("Error parsing shards config: %v", err)
 	}
 
-	shardCount = len(config)
-	if shardIdx < 0 {
-		log.Fatalf("Shard %q not found", *shard)
-	}
-
-	log.Printf("Shard count is %d, current shard: %d", shardCount, shardIdx)
+	log.Printf("Shard count is %d, current shard: %d", shards.Count, shards.CurIdx)
 
 	db, close, err := db.NewDatabase(*dbLocation)
 	if err != nil {
@@ -73,7 +61,7 @@ func main() {
 	}
 	defer close()
 
-	srv := handler.NewServer(db, shardIdx, shardCount, addrs)
+	srv := handler.NewServer(db, shards)
 
 	// Register handlers
 	http.HandleFunc("/get", srv.GetHandler)
