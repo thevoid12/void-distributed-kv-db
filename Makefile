@@ -30,8 +30,14 @@ run:
 # Pause for 0.1 seconds to ensure processes are terminated
 	sleep 0.1
 
-# Start mukliple instances(3) of void-distributed-kv-db with different configurations
+# Start mukliple instances of void-distributed-kv-db and its replicas with different configurations
 	./main -db-location=voidZoneA.db -http-addr=127.0.0.1:8080 -config-file=config/config.json -shard=void-shard-zoneA &
-	./main -db-location=voidZoneB.db -http-addr=127.0.0.1:8081 -config-file=config/config.json -shard=void-shard-zoneB &
-	./main -db-location=voidZoneC.db -http-addr=127.0.0.1:8082 -config-file=config/config.json -shard=void-shard-zoneC &
+	./main -db-location=voidZoneA-replica.db -http-addr=127.0.0.1:8081 -config-file=config/config.json -shard=void-shard-zoneA -replica&
+
+	./main -db-location=voidZoneB.db -http-addr=127.0.0.1:8082 -config-file=config/config.json -shard=void-shard-zoneB &
+	./main -db-location=voidZoneB-replica.db -http-addr=127.0.0.1:8083 -config-file=config/config.json -shard=void-shard-zoneB -replica&
+
+	./main -db-location=voidZoneC.db -http-addr=127.0.0.1:8084 -config-file=config/config.json -shard=void-shard-zoneC &
+	./main -db-location=voidZoneC-replica.db -http-addr=127.0.0.1:8085 -config-file=config/config.json -shard=void-shard-zoneC -replica
+
 	wait

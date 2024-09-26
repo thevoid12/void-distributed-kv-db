@@ -3,17 +3,20 @@
     {
       "name": "void-shard-zoneA",
       "idx": 0,
-      "address": "localhost:8080"
+      "address": "127.0.0.1:8080",
+      "replicas": "127.0.0.1:8081"
     },
     {
       "name": "void-shard-zoneB",
       "idx": 1,
-      "address": "localhost:8081"
+      "address": "127.0.0.1:8082",
+      "replicas": "127.0.0.1:8083"
     },
     {
       "name": "void-shard-zoneC",
       "idx": 2,
-      "address": "localhost:8082"
+      "address": "127.0.0.1:8084",
+      "replicas": "127.0.0.1:8085"
     }
   ]
 }

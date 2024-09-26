@@ -22,9 +22,10 @@ type Config struct {
 // the sharding config: the shards count, current index and
 // the addresses of all other shards too.
 type Shards struct {
-	Count  int
-	CurIdx int
-	Addrs  map[int]string
+	Count     int
+	CurIdx    int
+	Addrs     map[int]string
+	ShardName map[int]string
 }
 
 // ParseShards converts and verifies the list of shards
@@ -34,11 +35,13 @@ func ParseShards(shards []Shard, curShardName string) (*Shards, error) {
 	shardCount := len(shards)
 	shardIdx := -1
 	addrs := make(map[int]string)
+	name := make(map[int]string)
 	for _, s := range shards {
 		if _, ok := addrs[s.Idx]; ok {
 			return nil, fmt.Errorf("duplicate shard index: %d", s.Idx)
 		}
 		addrs[s.Idx] = s.Address
+		name[s.Idx] = s.Name
 		if s.Name == curShardName {
 			shardIdx = s.Idx
 		}
@@ -52,9 +55,10 @@ func ParseShards(shards []Shard, curShardName string) (*Shards, error) {
 		return nil, fmt.Errorf("shard %q was not found", curShardName)
 	}
 	return &Shards{
-		Addrs:  addrs,
-		Count:  shardCount,
-		CurIdx: shardIdx,
+		Count:     shardCount,
+		CurIdx:    shardIdx,
+		Addrs:     addrs,
+		ShardName: name,
 	}, nil
 }
 

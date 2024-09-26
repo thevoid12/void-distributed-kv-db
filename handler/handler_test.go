@@ -7,7 +7,7 @@ import (
 
 	"log"
 	"main/config"
-	"main/pkg/db"
+	"main/db"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -24,7 +24,7 @@ func createShardDb(t *testing.T, idx int) *db.Database {
 	tmpFile.Close()
 	name := tmpFile.Name()
 	t.Cleanup(func() { os.Remove(name) })
-	db, closeFunc, err := db.NewDatabase(name)
+	db, closeFunc, err := db.NewDatabase(name, false)
 	if err != nil {
 		t.Fatalf("Could not create new database %q: %v", name, err)
 	}
