@@ -25,11 +25,6 @@ The architecture is built around a consistent hashing-based sharding mechanism, 
 2. **Replica Nodes**: Distributed across zones for read redundancy and low-latency data access.
 3. **Consistent Hashing**: Ensures minimal reallocation of keys on shard or replica failure and enables efficient re-sharding.
 
-## Demo video
-[![void-kv-distributed db implementation](https://img.youtube.com/vi/IQgWHKAcaR0/hqdefault.jpg )](https://youtu.be/IQgWHKAcaR0?si=Txurosfka6GhI2sk)
-
-## Implementation Details Explanation video
-[![void-kv-distributed db explanation](https://img.youtube.com/vi/2mMF4qOHOgs/hqdefault.jpg )](https://youtu.be/2mMF4qOHOgs?si=5gH0Owoh8Q2Oqcsf)
 
 ## Getting Started
 
